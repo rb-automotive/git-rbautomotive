@@ -1,51 +1,71 @@
-// components/ReviewCard.tsx
-'use client'; // Required for Framer Motion
-
+// components/ReviewsSection.tsx
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react'; // Using lucide Star icon
-import type { Review } from '@/lib/reviewsData';
+import { motion } from 'framer-motion'; // If animating title server-side isn't sufficient
+import ReviewCard from './ReviewCard';
+import { reviewsData, reviewLinks } from '@/lib/reviewsData'; // Import review data and links
+import { MessageSquarePlus } from 'lucide-react'; // Icon for write review button
+import Link from 'next/link'; // For Yelp link if it's internal, otherwise use <a>
 
-interface ReviewCardProps {
-  review: Review;
-  index: number; // For staggering animation
-}
+const ReviewsSection = () => {
+  // This can likely remain a Server Component
 
-// Helper function to generate stars
-const renderStars = (rating: number) => {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    stars.push(
-      <Star
-        key={i}
-        size={16}
-        className={i <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}
-      />
-    );
-  }
-  return stars;
-};
-
-const ReviewCard = ({ review, index }: ReviewCardProps) => {
   return (
-    <motion.div
-      // Define review-card styles using Tailwind (adapted from original CSS)
-      className="review-card p-6 rounded-xl border border-gray-400 bg-gradient-to-br from-gray-200 via-gray-50 to-gray-200 shadow-md transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1 hover:border-gray-500"
-       initial={{ opacity: 0, y: 20 }}
-       whileInView={{ opacity: 1, y: 0 }} // Animate when in view
-       viewport={{ once: true, amount: 0.3 }} // Trigger once when 30% visible
-       transition={{ duration: 0.4, delay: index * 0.08 }} // Stagger faster for reviews
+     // Define section styles (gradient from original CSS)
+    <section
+      id="reviews"
+      className="section bg-gradient-to-b from-gray-200 to-gray-300 py-16 px-4 text-center rounded-lg shadow-md border border-gray-300 mx-2 md:mx-4 my-6"
     >
-      <div className="flex justify-between items-center mb-2">
-        <h4 className="font-semibold text-gray-800 tracking-tight">{review.name}</h4>
-        <div className="flex space-x-0.5">{renderStars(review.rating)}</div>
+      <div className="container mx-auto">
+         <h2 className="text-3xl font-bold mb-12 text-gray-800 tracking-tight reveal-in"> {/* Placeholder for animation */}
+           Customer Reviews
+         </h2>
+
+        {/* Grid for Review Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left mb-12">
+          {reviewsData.map((review, index) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              index={index}
+            />
+          ))}
+        </div>
+
+        {/* Write Review Button */}
+        <a
+          href={reviewLinks.googleWrite}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-secondary inline-flex items-center justify-center mb-10" // Reuse button style
+        >
+          <MessageSquarePlus size={20} className="mr-2" />
+          Write a Review on Google
+        </a>
+
+        {/* Links to Other Review Platforms */}
+        <div className="mt-8 reveal-in"> {/* Placeholder for animation */}
+          <h4 className="text-xl font-semibold text-gray-800 mb-4 tracking-tight">Leave us a review on:</h4>
+          <div className="flex justify-center items-center space-x-6">
+            <a href={reviewLinks.googleRead} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-800 transition duration-300 font-medium hover:underline">
+              Google
+            </a>
+            <span className="text-gray-400">|</span>
+            <a href={reviewLinks.facebook} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-800 transition duration-300 font-medium hover:underline">
+              Facebook
+            </a>
+             {reviewLinks.yelp !== '#' && ( // Only show Yelp if URL is provided
+                <>
+                 <span className="text-gray-400">|</span>
+                 <a href={reviewLinks.yelp} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-800 transition duration-300 font-medium hover:underline">
+                    Yelp
+                 </a>
+                </>
+             )}
+          </div>
+        </div>
       </div>
-      <p className="text-gray-600 text-sm italic mb-2">"{review.comment}"</p>
-      {review.date && (
-         <p className="text-xs text-gray-500 text-right mt-2">{review.date}</p>
-      )}
-    </motion.div>
+    </section>
   );
 };
 
-export default ReviewCard;
+export default ReviewsSection;
