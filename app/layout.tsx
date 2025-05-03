@@ -1,7 +1,6 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google'; // Using Inter as primary
-// import { YourHeadingFont } from 'next/font/google'; // Import your heading font if needed
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -12,10 +11,11 @@ const inter = Inter({
   display: 'swap',
 });
 
-// const headingFont = YourHeadingFont({ ...options, variable: '--font-quincy' });
+// Heading font definition is not included in this version
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://www.yourdomain.com.au'), // !! IMPORTANT: Replace with your actual domain
+    // !! IMPORTANT: Make sure this URL is correct and live when deploying !!
+    metadataBase: new URL('https://www.rbautomotivemobilemechanic.com.au'),
     title: {
         template: '%s | RB Automotive Mobile Mechanics',
         default: 'RB Automotive Mobile Mechanics | 24/7 Perth & Mandurah',
@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'RB Automotive Mobile Mechanics | 24/7 Perth & Mandurah',
         description: 'Convenient, reliable auto repair at your location in Perth & Mandurah.',
-        url: '/',
+        url: '/', // Base URL is used, so this resolves to the homepage
         siteName: 'RB Automotive Mobile Mechanics',
         images: [
             {
-                url: '/og-image.png', // !! CREATE and place this in /public
+                url: '/og-image.png', // !! CREATE and place this 1200x630 image in /public !!
                 width: 1200,
                 height: 630,
                 alt: 'RB Automotive Mobile Mechanics van and logo',
@@ -43,10 +43,10 @@ export const metadata: Metadata = {
     },
      // Add icons, manifest etc.
      icons: {
-        icon: '/favicon.ico', // !! CREATE and place this in /public
-        apple: '/apple-touch-icon.png', // !! CREATE and place this in /public
+        icon: '/favicon.ico', // !! CREATE and place this in /public !!
+        apple: '/apple-touch-icon.png', // !! CREATE and place this in /public !!
     },
-    // manifest: '/site.webmanifest', // !! CREATE and place this in /public
+    // manifest: '/site.webmanifest', // !! CREATE and place this in /public !!
 };
 
 
@@ -56,12 +56,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Apply font variables
-    <html lang="en" className={`${inter.variable} /* ${headingFont.variable} */`}>
-      <body className="font-sans"> {/* Applied font-sans from globals.css */}
+    // Apply only the Inter font variable
+    <html lang="en" className={`${inter.variable}`}>
+      <body className="font-sans"> {/* font-sans uses --font-inter via tailwind.config.js */}
         <Header />
          {/* Add padding-top equal to header height to avoid content overlap */}
-        <main className="pt-16 md:pt-20"> {/* Adjust pt value based on your final Header height */}
+         {/* You might need to inspect your rendered header to get the exact height */}
+        <main className="pt-16 md:pt-20">
             {children}
         </main>
         <Footer />
