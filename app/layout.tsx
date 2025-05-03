@@ -1,15 +1,14 @@
-// src/app/layout.tsx
-import { ReactNode } from "react";
+import './globals.css';
 
-interface RootLayoutProps {
-  children: ReactNode;
-}
+export const metadata = {
+  title: 'RB Automotive',
+  description: 'Reliable. Efficient. Mobile.',
+};
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
   );
 }
-

@@ -1,0 +1,25 @@
+/* src/app/globals.css */
+/* @type postcss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional Custom Global Styles */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #1f2937; /* Tailwind gray-800 */
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
