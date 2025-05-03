@@ -22,7 +22,7 @@ export default function Home() {
             </div>
             <div className="p-6 bg-white rounded shadow">
               <h3 className="text-xl font-bold mb-2">Performance Parts</h3>
-              <p>High-quality parts tailored to your vehicle's upgrade goals.</p>
+              <p>High-quality parts tailored to your vehicle&apos;s upgrade goals.</p>
             </div>
           </div>
         </div>
@@ -32,5 +32,5 @@ export default function Home() {
         <p>&copy; {new Date().getFullYear()} RB Automotive. All rights reserved.</p>
       </footer>
     </main>
-  )
+  );
 }
