@@ -1,14 +1,14 @@
 // components/ReviewCard.tsx
-'use client'; // Required for Framer Motion
+'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react'; // Using lucide Star icon
+import { Star } from 'lucide-react';
 import type { Review } from '@/lib/reviewsData';
 
 interface ReviewCardProps {
   review: Review;
-  index: number; // For staggering animation
+  index: number;
 }
 
 // Helper function to generate stars
@@ -29,18 +29,18 @@ const renderStars = (rating: number) => {
 const ReviewCard = ({ review, index }: ReviewCardProps) => {
   return (
     <motion.div
-      // Define review-card styles using Tailwind (adapted from original CSS)
       className="review-card p-6 rounded-xl border border-gray-400 bg-gradient-to-br from-gray-200 via-gray-50 to-gray-200 shadow-md transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1 hover:border-gray-500"
        initial={{ opacity: 0, y: 20 }}
-       whileInView={{ opacity: 1, y: 0 }} // Animate when in view
-       viewport={{ once: true, amount: 0.3 }} // Trigger once when 30% visible
-       transition={{ duration: 0.4, delay: index * 0.08 }} // Stagger faster for reviews
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true, amount: 0.3 }}
+       transition={{ duration: 0.4, delay: index * 0.08 }}
     >
       <div className="flex justify-between items-center mb-2">
         <h4 className="font-semibold text-gray-800 tracking-tight">{review.name}</h4>
         <div className="flex space-x-0.5">{renderStars(review.rating)}</div>
       </div>
-      <p className="text-gray-600 text-sm italic mb-2">"{review.comment}"</p>
+      {/* FIX: Used template literal for quotes */}
+      <p className="text-gray-600 text-sm italic mb-2">{`"${review.comment}"`}</p>
       {review.date && (
          <p className="text-xs text-gray-500 text-right mt-2">{review.date}</p>
       )}

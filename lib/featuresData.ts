@@ -1,10 +1,10 @@
-// lib/featuresData.ts
+// lib/featuresData.ts (Corrected)
 import React from 'react';
-import { MapPin, Wrench, ReceiptText, CalendarCheck, Settings, ThumbsUp } from 'lucide-react'; // Import desired icons
+// No need to import specific icons here anymore
 
 export interface Feature {
   id: string;
-  icon: React.ElementType; // Use React.ElementType for component types
+  iconName: string; // Changed from 'icon' and type to string
   title: string;
   description: string;
 }
@@ -12,37 +12,37 @@ export interface Feature {
 export const featuresData: Feature[] = [
   {
     id: 'convenience',
-    icon: MapPin,
+    iconName: 'MapPin', // Store the name as a string
     title: 'Convenience',
     description: 'We come to your home or office in Perth metro and Mandurah, saving you time and hassle.',
   },
   {
     id: 'experience',
-    icon: Wrench,
+    iconName: 'Wrench', // Store the name as a string
     title: 'Experienced Mechanics',
     description: 'Our technicians are highly skilled, certified, and experienced in a wide range of vehicles.',
   },
   {
     id: 'pricing',
-    icon: ReceiptText,
+    iconName: 'ReceiptText', // Store the name as a string
     title: 'Transparent Pricing',
     description: 'Upfront quotes with no hidden fees. We explain the work needed before starting.',
   },
    {
     id: 'booking',
-    icon: CalendarCheck,
+    iconName: 'CalendarCheck', // Store the name as a string
     title: 'Easy Booking',
     description: 'Schedule your service easily online, by phone, or text message.',
   },
    {
     id: 'services',
-    icon: Settings, // Example icon, choose one that fits
+    iconName: 'Settings', // Store the name as a string
     title: 'Wide Range of Services',
     description: 'From basic maintenance and log book servicing to complex repairs and diagnostics.',
   },
    {
     id: 'satisfaction',
-    icon: ThumbsUp,
+    iconName: 'ThumbsUp', // Store the name as a string
     title: 'Customer Satisfaction',
     description: "We are committed to providing the best service and ensuring you're happy with the results.",
   },

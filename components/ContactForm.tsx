@@ -1,12 +1,12 @@
 // components/ContactForm.tsx
-'use client'; // Required for react-hook-form and useFormState
+'use client';
 
 import React from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { submitContactForm, type ContactFormState } from '@/app/actions'; // Import action and type
+import { submitContactForm, type ContactFormState } from '@/app/actions';
 
 // Re-define schema here or import if shared carefully
 const ContactSchema = z.object({
@@ -33,16 +33,13 @@ function SubmitButton() {
   );
 }
 
-
 const ContactForm = () => {
   const initialState: ContactFormState = null;
-  // useFormState hook manages state updates from the server action
   const [state, formAction] = useFormState(submitContactForm, initialState);
 
-  // useForm hook for client-side validation state
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(ContactSchema), // Use Zod for validation
-    // Populate fields if server returns validation errors
+  // FIX: Removed handleSubmit from destructuring
+  const { register, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(ContactSchema),
     defaultValues: {
         name: state?.fields?.name ?? '',
         email: state?.fields?.email ?? '',
@@ -53,7 +50,7 @@ const ContactForm = () => {
 
   return (
     <form action={formAction} className="space-y-4">
-      {/* Display Server Action messages */}
+       {/* Display Server Action messages */}
        {state?.message && !state.issues && (
         <div className={`p-3 rounded-md text-sm ${state.message.includes('Thank you') ? 'bg-green-100 text-green-800 border border-green-200' : 'bg-red-100 text-red-800 border border-red-200'}`}>
             {state.message}
@@ -68,7 +65,6 @@ const ContactForm = () => {
          </div>
        )}
 
-
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
         <input
@@ -76,8 +72,9 @@ const ContactForm = () => {
           id="name"
           {...register('name')}
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+          aria-invalid={errors.name ? "true" : "false"} // Accessibility improvement
         />
-        {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name.message}</p>}
+        {errors.name && <p role="alert" className="mt-1 text-xs text-red-600">{errors.name.message}</p>}
       </div>
        <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -86,8 +83,9 @@ const ContactForm = () => {
           id="email"
           {...register('email')}
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+           aria-invalid={errors.email ? "true" : "false"}
         />
-        {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
+        {errors.email && <p role="alert" className="mt-1 text-xs text-red-600">{errors.email.message}</p>}
       </div>
         <div>
         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone <span className="text-xs text-gray-500">(Optional)</span></label>
@@ -96,8 +94,9 @@ const ContactForm = () => {
           id="phone"
           {...register('phone')}
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+           aria-invalid={errors.phone ? "true" : "false"}
         />
-        {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone.message}</p>}
+        {errors.phone && <p role="alert" className="mt-1 text-xs text-red-600">{errors.phone.message}</p>}
       </div>
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
@@ -106,8 +105,9 @@ const ContactForm = () => {
           rows={4}
           {...register('message')}
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 ${errors.message ? 'border-red-500' : 'border-gray-300'}`}
+           aria-invalid={errors.message ? "true" : "false"}
         ></textarea>
-        {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message.message}</p>}
+        {errors.message && <p role="alert" className="mt-1 text-xs text-red-600">{errors.message.message}</p>}
       </div>
       <SubmitButton />
     </form>
