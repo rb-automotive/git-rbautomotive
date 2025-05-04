@@ -3,17 +3,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import type { Feature } from '@/lib/featuresData';
+import type { Feature } from '@/lib/featuresData'; // Import the updated interface
 // Import ALL icons used in featuresData + a default
-// FIX: Removed 'type Icon as LucideIconType'
 import {
-    MapPin, Wrench, ReceiptText, CalendarCheck, Settings, ThumbsUp, AlertCircle
+    MapPin, Wrench, ReceiptText, CalendarCheck, Settings, ThumbsUp, AlertCircle // Added AlertCircle as default
 } from 'lucide-react';
-// If you plan to strongly type the map values with the Lucide Icon type, you could do:
-// import type { LucideIcon } from 'lucide-react'; // Import the type directly if needed
 
-// Create a mapping from icon name string to the actual component
-// Using React.ElementType is generally safe and easy here
+// Create a mapping from icon name string (case-sensitive) to the actual component
 const iconMap: { [key: string]: React.ElementType } = {
     MapPin,
     Wrench,
@@ -24,26 +20,32 @@ const iconMap: { [key: string]: React.ElementType } = {
 };
 
 interface FeatureCardProps {
-  feature: Feature;
-  index: number;
+  feature: Feature; // Uses the updated Feature type with iconName
+  index: number; // For staggering animation
 }
 
 const FeatureCard = ({ feature, index }: FeatureCardProps) => {
-  const IconComponent: React.ElementType = iconMap[feature.iconName] || AlertCircle;
+  // Look up the icon component based on the name, provide a default if not found
+  const IconComponent = iconMap[feature.iconName] || AlertCircle;
 
   return (
     <motion.div
-      className="feature-card p-6 rounded-xl border border-gray-300 bg-gradient-to-b from-gray-100 to-gray-200 shadow-md transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-1 hover:border-gray-400 hover:from-white hover:to-gray-100"
+      // Apply feature card styles using custom utilities from tailwind.config.js
+      // Matches original: gradient, border, radius, padding, shadow, transition, hover effects
+      className="feature-card p-6 rounded-xl border border-gray-300 bg-feature-card-idle shadow-feature-card transition-all duration-300 ease-in-out hover:shadow-feature-card-hover hover:-translate-y-1 hover:border-gray-400 hover:bg-feature-card-hover" // Use utilities defined in tailwind config
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileInView={{ opacity: 1, y: 0 }} // Animate when in view
+      viewport={{ once: true, amount: 0.2 }} // Trigger animation when 20% visible
+      transition={{ duration: 0.4, delay: index * 0.1 }} // Stagger based on index
     >
-      <div className="flex items-center mb-3">
-        <IconComponent className="mr-3 h-6 w-6 text-red-600 flex-shrink-0" strokeWidth={2} />
+      <div className="flex items-start mb-3"> {/* Changed items-center to items-start */}
+        {/* Icon styling */}
+        <IconComponent className="mr-3 mt-1 h-6 w-6 text-red-600 flex-shrink-0" strokeWidth={2} /> {/* Added mt-1 for alignment */}
+        {/* Heading styling - matches original h3 */}
         <h3 className="text-xl font-semibold text-gray-800 tracking-tight">{feature.title}</h3>
       </div>
-      <p className="text-gray-600 text-sm">{feature.description}</p>
+      {/* Paragraph styling - matches original p */}
+      <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p> {/* Added leading-relaxed */}
     </motion.div>
   );
 };
