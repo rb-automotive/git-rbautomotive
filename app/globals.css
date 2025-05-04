@@ -1,117 +1,85 @@
-    /* app/globals.css */
+/* app/globals.css */
 
-    /* === Tailwind Directives (MUST BE AT THE VERY TOP!) === */
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
+/* === Tailwind Directives (MUST BE AT THE VERY TOP!) === */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-    /* === Base Styles === */
-    @layer base {
-      html {
-          scroll-behavior: smooth;
-          @apply h-full antialiased; /* Apply antialiasing here */
-      }
+/* === Base Styles === */
+@layer base {
+  html {
+      scroll-behavior: smooth;
+      @apply h-full antialiased;
+  }
 
-      body {
-          /* Use the font variable defined in layout.tsx */
-          @apply font-sans text-gray-800; /* Use sans font (Inter) */
-          @apply flex flex-col min-h-full; /* Ensure full height layout */
-          background-color: #f8fafc; /* Tailwind gray-50 */
-      }
+  body {
+      @apply font-sans text-gray-800; /* Uses --font-inter via tailwind.config */
+      @apply flex flex-col min-h-full;
+      background-color: #f8fafc; /* gray-50 */
+  }
 
-      /* Consistent tracking for headings */
-      h1, h2, h3, h4, h5, h6 {
-         @apply tracking-tight font-semibold; /* Add default weight */
-      }
+  h1, h2, h3, h4, h5, h6 {
+     @apply tracking-tight font-semibold;
+  }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-xl; }
+  h4 { @apply text-lg; }
 
-      h2 { @apply text-3xl; }
-      h3 { @apply text-xl; }
-      h4 { @apply text-lg; }
+  a {
+      @apply text-brand-red hover:text-brand-red-dark transition-colors;
+  }
+}
 
-      /* Ensure links have a sensible default */
-      a {
-          /* Using brand colors defined in tailwind.config.js */
-          @apply text-brand-red hover:text-brand-red-dark transition-colors;
-      }
+/* === Reusable Component Styles === */
+@layer components {
+  /* --- Buttons --- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 ease-in-out border-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-btn hover:shadow-btn-hover hover:-translate-y-0.5;
+    @apply text-sm md:text-base;
+  }
+  .btn-primary { /* Gray */
+    @apply btn bg-btn-primary-idle hover:bg-btn-primary-hover focus:ring-brand-gray-medium;
+  }
+  .btn-secondary { /* Red */
+     @apply btn bg-btn-secondary-idle hover:bg-btn-secondary-hover focus:ring-brand-red;
+  }
+
+  /* --- Base Section Styling --- */
+  .section {
+      @apply rounded-lg border border-gray-300 bg-section-bg shadow-section-shadow;
+      @apply py-16 px-4 my-8 md:my-12; /* Default section spacing */
+  }
+
+  /* --- Base Card Styling --- */
+  .base-card {
+      @apply rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 ease-in-out bg-white shadow-card;
+  }
+
+  /* --- Specific Card Styles --- */
+  .service-card {
+      @apply base-card flex flex-col h-full hover:shadow-card-hover hover:border-gray-300 hover:-translate-y-1.5;
+  }
+  .feature-card {
+      @apply p-6 rounded-xl border border-gray-300 bg-feature-card-idle shadow-feature-card transition-all duration-300 ease-in-out hover:shadow-feature-card-hover hover:-translate-y-1 hover:border-gray-400 hover:bg-feature-card-hover;
+  }
+  .review-card {
+      @apply p-6 rounded-xl border border-gray-400 bg-review-card-bg shadow-review-card transition-all duration-300 ease-in-out hover:shadow-review-card-hover hover:-translate-y-1;
+  }
+
+  /* --- Form Input Styling --- */
+  .form-input {
+      @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-red focus:border-brand-red sm:text-sm;
+  }
+  .form-textarea { @apply form-input; }
+  .form-label { @apply block text-sm font-medium text-gray-700 mb-1; }
+  .form-error { @apply mt-1 text-xs text-red-600; }
+}
+
+/* === Utility Overrides or Additions === */
+@layer utilities {
+    .bg-logo-gradient {
+        @apply bg-gradient-to-r from-brand-red-light to-brand-red;
     }
-
-    /* === Reusable Component Styles === */
-    @layer components {
-      /* --- Buttons --- */
-      .btn {
-        @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 ease-in-out border-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-btn hover:shadow-btn-hover hover:-translate-y-0.5;
-        @apply text-sm md:text-base; /* Base text size */
-      }
-      /* Primary Button (Gray) */
-      .btn-primary {
-        /* Uses custom gradient/shadow defined in tailwind.config.js */
-        @apply btn bg-btn-primary-idle hover:bg-btn-primary-hover focus:ring-brand-gray-medium;
-      }
-      /* Secondary Button (Red) */
-      .btn-secondary {
-         /* Uses custom gradient/shadow defined in tailwind.config.js */
-         @apply btn bg-btn-secondary-idle hover:bg-btn-secondary-hover focus:ring-brand-red;
-      }
-
-      /* --- Base Section Styling --- */
-      .section {
-          /* Uses custom gradient/shadow defined in tailwind.config.js */
-          @apply rounded-lg border border-gray-300 bg-section-bg shadow-section-shadow;
-          /* Default section spacing */
-          @apply py-16 px-4 my-8 md:my-12; /* Consistent vertical margin */
-      }
-
-      /* --- Base Card Styling --- */
-      .base-card {
-          @apply rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 ease-in-out bg-white shadow-card;
-      }
-
-      /* --- Specific Card Styles --- */
-      .service-card {
-          @apply base-card flex flex-col h-full hover:shadow-card-hover hover:border-gray-300 hover:-translate-y-1.5;
-      }
-      .feature-card {
-          /* Uses custom gradient/shadow defined in tailwind.config.js */
-          @apply p-6 rounded-xl border border-gray-300 bg-feature-card-idle shadow-feature-card transition-all duration-300 ease-in-out hover:shadow-feature-card-hover hover:-translate-y-1 hover:border-gray-400 hover:bg-feature-card-hover;
-      }
-      .review-card {
-          /* Uses custom gradient/shadow defined in tailwind.config.js */
-          @apply p-6 rounded-xl border border-gray-400 bg-review-card-bg shadow-review-card transition-all duration-300 ease-in-out hover:shadow-review-card-hover hover:-translate-y-1;
-      }
-
-      /* --- Form Input Styling --- */
-      .form-input {
-          @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-red focus:border-brand-red sm:text-sm;
-      }
-      .form-textarea {
-          @apply form-input;
-      }
-      .form-label {
-           @apply block text-sm font-medium text-gray-700 mb-1;
-      }
-      .form-error {
-           @apply mt-1 text-xs text-red-600;
-      }
-
-    }
-
-    /* === Utility Overrides or Additions === */
-    @layer utilities {
-        /* Custom utility for logo gradient */
-        .bg-logo-gradient {
-            @apply bg-gradient-to-r from-brand-red-light to-brand-red;
-        }
-        /* Text shadow utilities (if not using plugin) */
-        .text-shadow-md { text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    }
-
-    /* Optional: Load Quincy font via CSS if not using next/font */
-    /* @font-face {
-        font-family: 'Quincy';
-        src: url('/fonts/quincy-regular.woff2') format('woff2');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    } */
-    
+    .text-shadow-md { text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
+    .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+}

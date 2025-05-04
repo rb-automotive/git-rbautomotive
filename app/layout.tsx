@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css'; // Import global styles
+import './globals.css'; // <<< Import globals.css HERE
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -46,13 +46,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
       {/* Apply base font, ensure full height layout */}
-      <body className="font-sans flex flex-col min-h-full">
+      <body className="font-sans flex flex-col min-h-full bg-gray-50"> {/* Added bg-gray-50 for slight off-white */}
         <Header /> {/* Renders the sticky header */}
 
         {/* Main content area grows to fill space */}
         {/* Padding top MUST match the actual height of the Header */}
-        {/* Use Browser Dev Tools to Inspect the Header height if unsure */}
-        <main className="flex-grow pt-[68px] md:pt-[76px]"> {/* <<< ADJUST pt-[value] AS NEEDED */}
+        {/* Inspect the header height in dev tools if unsure */}
+        {/* Using example values, ADJUST AS NEEDED */}
+        <main className="flex-grow pt-[68px] md:pt-[76px]">
             {children}
         </main>
 
