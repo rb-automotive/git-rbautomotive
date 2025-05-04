@@ -1,59 +1,59 @@
 // components/ServiceCard.tsx
-'use client'; // Needed if using Framer Motion directly here
+'use client';
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import type { ServiceItem } from '@/lib/servicesData'; // Import the interface
+import type { ServiceItem } from '@/lib/servicesData';
 
-// Define props for the card
 interface ServiceCardProps {
   service: ServiceItem;
-  index: number; // For staggered animation delay
+  index: number;
 }
 
 const ServiceCard = ({ service, index }: ServiceCardProps) => {
   return (
     <motion.div
-      className="service-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 flex flex-col h-full transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl"
+      // Apply base card styles, plus specific service card hover effects
+      className="base-card bg-white flex flex-col h-full border-gray-200 hover:border-gray-400 hover:-translate-y-2"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }} // Stagger animation based on index
-      viewport={{ once: true, amount: 0.3 }} // Trigger animation once when 30% visible
+      whileInView={{ opacity: 1, y: 0 }} // Use whileInView for scroll animation
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      viewport={{ once: true, amount: 0.2 }} // Trigger earlier
     >
-      {/* Image Preview */}
-      <div className="image-preview w-full h-[200px] bg-gray-200 relative">
+      {/* Image Preview - Apply original styles */}
+      <div className="w-full h-[200px] bg-gray-200 relative flex-shrink-0 rounded-t-lg overflow-hidden">
         <Image
           src={service.imageSrc}
           alt={service.imageAlt}
           fill
-          style={{ objectFit: 'cover' }} // Cover the area
-          sizes="(max-width: 768px) 100vw, 50vw" // Basic sizes optimization
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 100vw, 50vw"
           onError={(e) => {
-            // Handle image loading errors gracefully
             e.currentTarget.src = 'https://placehold.co/600x200/cccccc/333333?text=Image+Error';
-            e.currentTarget.srcset = ''; // Prevent trying other sources
+            e.currentTarget.srcset = '';
           }}
         />
       </div>
 
-      {/* Card Content */}
-      <div className="service-card-content p-6 flex flex-col flex-grow">
+      {/* Card Content - Apply original padding, flex layout */}
+      <div className="p-6 flex flex-col flex-grow text-left">
         <h3 className="text-xl font-semibold mb-4 text-gray-800 tracking-tight">{service.title}</h3>
         {service.description && (
-          <p className="text-gray-600 text-sm mb-6 flex-grow">{service.description}</p>
+          // Apply original text styles
+          <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">{service.description}</p>
         )}
         {service.listItems && (
-          <ul className="list-disc list-inside text-gray-600 mb-6 text-sm space-y-1 flex-grow">
+          // Apply original list styles
+          <ul className="list-disc list-inside text-gray-600 mb-6 text-sm space-y-1.5 flex-grow leading-relaxed">
             {service.listItems.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
         )}
-         {/* Optional: Add a CTA button per card if needed
-         <div className="mt-auto pt-4">
+         {/* Optional CTA button styling if uncommented */}
+         {/* <div className="mt-auto pt-4">
             <Link href="#contact" className="btn-primary text-sm">Book {service.title}</Link>
-         </div>
-         */}
+         </div> */}
       </div>
     </motion.div>
   );
