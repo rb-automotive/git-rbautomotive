@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
       {/* Apply base font, ensure full height layout */}
-      <body className="font-sans flex flex-col min-h-full bg-gray-50"> {/* Added bg-gray-50 for slight off-white */}
+      <body className="font-sans flex flex-col min-h-full bg-gray-50">
         <Header /> {/* Renders the sticky header */}
 
         {/* Main content area grows to fill space */}

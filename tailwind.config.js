@@ -1,15 +1,17 @@
 // tailwind.config.js
+// Location: git-rbautomotive/tailwind.config.js
 
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       fontFamily: {
+        // Assumes --font-inter is set in layout.tsx via next/font
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui'],
         // heading: ['Quincy', 'ui-serif', 'Georgia'], // Add if Quincy is loaded via CSS
       },
