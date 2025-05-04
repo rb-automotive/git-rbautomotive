@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css'; // <<< Import globals.css HERE
+import './globals.css'; // Import global styles
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -11,7 +11,7 @@ const inter = Inter({
   display: 'swap',
 });
 
-// Define Metadata (Ensure metadataBase and image paths are correct)
+// Define Metadata (Verify paths and domain)
 export const metadata: Metadata = {
     metadataBase: new URL('https://www.rbautomotivemobilemechanic.com.au'), // <<< VERIFY DOMAIN
     title: {
@@ -44,20 +44,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Apply font variable defined by next/font
     <html lang="en" className={`${inter.variable} h-full`}>
-      {/* Apply base font from tailwind.config.js, ensure full height layout */}
+      {/* Apply base font, ensure full height layout */}
       <body className="font-sans flex flex-col min-h-full">
         <Header /> {/* Renders the sticky header */}
 
-        {/* Main content area */}
-        {/* IMPORTANT: pt-[value] MUST match the height of your Header component */}
-        {/* Inspect the header height in dev tools if unsure */}
-        <main className="flex-grow pt-[68px] md:pt-[76px]"> {/* Example values, ADJUST AS NEEDED */}
+        {/* Main content area grows to fill space */}
+        {/* Padding top MUST match the actual height of the Header */}
+        {/* Use Browser Dev Tools to Inspect the Header height if unsure */}
+        <main className="flex-grow pt-[68px] md:pt-[76px]"> {/* <<< ADJUST pt-[value] AS NEEDED */}
             {children}
         </main>
 
-        <Footer /> {/* Renders the footer */}
+        <Footer /> {/* Renders the footer at the bottom */}
       </body>
     </html>
   );

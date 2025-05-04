@@ -6,7 +6,7 @@ import ContactSection from '@/components/ContactSection';
 import ReviewsSection from '@/components/ReviewsSection';
 
 export default function HomePage() {
-  // Define JSON-LD Structured Data
+  // Define JSON-LD Structured Data (Verify paths and domain)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AutomotiveBusiness",
@@ -46,8 +46,8 @@ export default function HomePage() {
       <Hero />
 
       {/* Container for subsequent sections with max-width and horizontal padding */}
-      {/* Vertical spacing is handled by the .section class margin */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Vertical spacing is handled by the .section class margin (my-8 md:my-12) */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
          <ServicesSection />
          <WhyChooseUs />
          <ContactSection />

@@ -28,7 +28,7 @@ const Hero = () => {
         <Image
           // *** FIX: Hardcode the correct background image path directly here ***
           // Replace '/images/steel.jpg' with your actual hero background path if different
-          src="/images/steel.jpg" // <<<--- HARDCODED PATH
+          src="/images/.jpg" // <<<--- HARDCODED PATH
           alt="Metallic texture background" // <<<--- UPDATE ALT TEXT if needed
           fill
           style={{ objectFit: 'cover' }}
