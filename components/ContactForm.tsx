@@ -1,8 +1,10 @@
 // components/ContactForm.tsx
 'use client';
 
-import React from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+// FIX: Import useActionState from 'react' instead of useFormState from 'react-dom'
+import React, { useActionState } from 'react';
+// FIX: useFormStatus still comes from 'react-dom'
+import { useFormStatus } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -25,7 +27,6 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      // Example styling - use your btn-primary or similar
       className={`btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed ${pending ? 'animate-pulse' : ''}`}
     >
       {pending ? 'Sending...' : 'Send Message'}
@@ -35,18 +36,33 @@ function SubmitButton() {
 
 const ContactForm = () => {
   const initialState: ContactFormState = null;
-  const [state, formAction] = useFormState(submitContactForm, initialState);
+  // FIX: Use the renamed hook: useActionState
+  const [state, formAction] = useActionState(submitContactForm, initialState);
 
-  // FIX: Removed handleSubmit from destructuring
   const { register, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(ContactSchema),
+    // Reset form fields based on the state returned by the action
+    // This part might need adjustment based on how you handle success/failure state
+    // For now, keep using state?.fields to repopulate on validation error
     defaultValues: {
         name: state?.fields?.name ?? '',
         email: state?.fields?.email ?? '',
         phone: state?.fields?.phone ?? '',
         message: state?.fields?.message ?? '',
-    }
+    },
+    // Reset form on successful submission if state.message indicates success
+    // reset: state?.message.includes('Thank you') ? { name: '', email: '', phone: '', message: '' } : undefined,
   });
+
+  // Effect to potentially clear form on successful submission
+  // React Hook Form's 'reset' in useForm options might be better
+  // React.useEffect(() => {
+  //   if (state?.message && state.message.includes('Thank you')) {
+  //      // Manually reset the form using RHF's reset function if needed
+  //      // const { reset } = useForm(); // Need to get reset from useForm
+  //      // reset({ name: '', email: '', phone: '', message: '' });
+  //   }
+  // }, [state]); // Add 'reset' to dependency array if using it
 
   return (
     <form action={formAction} className="space-y-4">
@@ -72,7 +88,7 @@ const ContactForm = () => {
           id="name"
           {...register('name')}
           className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
-          aria-invalid={errors.name ? "true" : "false"} // Accessibility improvement
+          aria-invalid={errors.name ? "true" : "false"}
         />
         {errors.name && <p role="alert" className="mt-1 text-xs text-red-600">{errors.name.message}</p>}
       </div>

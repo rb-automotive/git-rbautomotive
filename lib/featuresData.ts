@@ -1,6 +1,6 @@
-// lib/featuresData.ts (Corrected)
-import React from 'react';
-// No need to import specific icons here anymore
+// lib/featuresData.ts
+// FIX: Removed unused React import
+// import React from 'react';
 
 export interface Feature {
   id: string;

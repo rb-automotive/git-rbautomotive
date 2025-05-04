@@ -1,16 +1,19 @@
 // components/FeatureCard.tsx
 'use client';
 
-import React from 'react'; // Make sure React is imported
+import React from 'react';
 import { motion } from 'framer-motion';
 import type { Feature } from '@/lib/featuresData';
-// Import ALL icons used in featuresData + a default + the type Icon
+// Import ALL icons used in featuresData + a default
+// FIX: Removed 'type Icon as LucideIconType'
 import {
-    MapPin, Wrench, ReceiptText, CalendarCheck, Settings, ThumbsUp, AlertCircle, type Icon as LucideIconType
+    MapPin, Wrench, ReceiptText, CalendarCheck, Settings, ThumbsUp, AlertCircle
 } from 'lucide-react';
+// If you plan to strongly type the map values with the Lucide Icon type, you could do:
+// import type { LucideIcon } from 'lucide-react'; // Import the type directly if needed
 
 // Create a mapping from icon name string to the actual component
-// FIX: Use React.ElementType for the type of the map values
+// Using React.ElementType is generally safe and easy here
 const iconMap: { [key: string]: React.ElementType } = {
     MapPin,
     Wrench,
@@ -26,8 +29,6 @@ interface FeatureCardProps {
 }
 
 const FeatureCard = ({ feature, index }: FeatureCardProps) => {
-  // Look up the icon component based on the name, provide a default
-  // FIX: Also ensure IconComponent type matches React.ElementType or specific LucideIconType
   const IconComponent: React.ElementType = iconMap[feature.iconName] || AlertCircle;
 
   return (
