@@ -1,46 +1,69 @@
+/* app/globals.css */
+
+/* Import Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    @apply bg-gray-100 font-sans antialiased; /* font-sans uses --font-inter */
-}
-
-/* More specific Button component styles using @layer */
-@layer components {
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 ease-in-out border-none focus:outline-none focus:ring-2 focus:ring-offset-2;
+/* Define base styles and custom component layers */
+@layer base {
+  html {
+      scroll-behavior: smooth;
   }
+
+  body {
+      /* Use the font variable defined in layout.tsx */
+      @apply bg-gray-100 font-sans antialiased text-gray-800;
+  }
+
+  /* Add other base element styles if needed */
+  h1, h2, h3, h4, h5, h6 {
+     @apply tracking-tight; /* Apply consistent tracking */
+  }
+}
+
+@layer components {
+  /* Base Button Style */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-200 ease-in-out border-none focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  /* Primary Button (Gray in original) */
   .btn-primary {
     @apply btn bg-btn-primary-idle shadow-btn hover:bg-btn-primary-hover hover:shadow-btn-hover hover:-translate-y-0.5 focus:ring-gray-500;
   }
+  /* Secondary Button (Red in original) */
   .btn-secondary {
      @apply btn bg-btn-secondary-idle shadow-btn hover:bg-btn-secondary-hover hover:shadow-btn-hover hover:-translate-y-0.5 focus:ring-red-500;
   }
 
-  /* Base section styling */
+  /* Base Section Styling (Matches original .section) */
   .section {
-      @apply py-16 px-4 my-6 mx-2 md:mx-4 rounded-lg border border-gray-300; /* Use gray-300 to match #d1d5db */
-      @apply bg-section-bg shadow-section-shadow;
+      @apply rounded-lg border border-gray-300; /* border-gray-300 is approx #d1d5db */
+      @apply bg-section-bg shadow-section-shadow; /* Use custom gradient/shadow */
+      /* Define default section spacing - can be overridden */
+      @apply py-16 px-4 my-6;
   }
 
-  /* Base card styling (can be overridden per card type) */
+  /* Base Card Styling (Optional - can apply directly in components) */
   .base-card {
-      @apply rounded-xl shadow-card border border-gray-200 overflow-hidden transition-all duration-300 ease-in-out;
-      @apply hover:shadow-card-hover;
+      @apply rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 ease-in-out bg-white;
+      /* Base shadow can be applied here or within specific card styles */
+      /* @apply shadow-card; */
   }
+
+  /* Specific Card Styles using @apply (Alternative to direct utilities in components) */
+  /* Example: You could define .service-card, .feature-card, .review-card here */
+  /* .service-card {
+      @apply base-card flex flex-col h-full shadow-card hover:shadow-card-hover hover:border-gray-400 hover:-translate-y-2;
+  }
+  .feature-card {
+      @apply p-6 rounded-xl border border-gray-300 bg-feature-card-idle shadow-feature-card transition-all duration-300 ease-in-out hover:shadow-feature-card-hover hover:-translate-y-1 hover:border-gray-400 hover:bg-feature-card-hover;
+  }
+  .review-card {
+      @apply p-6 rounded-xl border border-gray-400 bg-review-card-bg shadow-review-card transition-all duration-300 ease-in-out hover:shadow-review-card-hover hover:-translate-y-1;
+  } */
+
 }
 
-/* You might need to load the Quincy font via @font-face if not using next/font */
-/* @font-face {
-    font-family: 'Quincy';
-    src: url('/fonts/quincy-regular.woff2') format('woff2'); // Example path
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-} */
-/* Add other weights/styles if needed */
+/* Add any other global utility styles or overrides here */
+
