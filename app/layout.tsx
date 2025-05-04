@@ -1,21 +1,19 @@
 // app/layout.tsx
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google'; // Using Inter as primary
-import './globals.css';
+import { Inter } from 'next/font/google';
+import './globals.css'; // <<< Import globals.css HERE
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-inter', // CSS variable for Tailwind
   display: 'swap',
 });
 
-// Heading font definition is not included in this version
-
+// Define Metadata (Ensure metadataBase and image paths are correct)
 export const metadata: Metadata = {
-    // !! IMPORTANT: Make sure this URL is correct and live when deploying !!
-    metadataBase: new URL('https://www.rbautomotivemobilemechanic.com.au'),
+    metadataBase: new URL('https://www.rbautomotivemobilemechanic.com.au'), // <<< VERIFY DOMAIN
     title: {
         template: '%s | RB Automotive Mobile Mechanics',
         default: 'RB Automotive Mobile Mechanics | 24/7 Perth & Mandurah',
@@ -28,27 +26,17 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'RB Automotive Mobile Mechanics | 24/7 Perth & Mandurah',
         description: 'Convenient, reliable auto repair at your location in Perth & Mandurah.',
-        url: '/', // Base URL is used, so this resolves to the homepage
+        url: '/',
         siteName: 'RB Automotive Mobile Mechanics',
-        images: [
-            {
-                url: '/og-image.png', // !! CREATE and place this 1200x630 image in /public !!
-                width: 1200,
-                height: 630,
-                alt: 'RB Automotive Mobile Mechanics van and logo',
-            },
-        ],
+        images: [ { url: '/og-image.png', width: 1200, height: 630, alt: 'RB Automotive Mobile Mechanics van and logo', }, ], // <<< Ensure /public/og-image.png exists
         locale: 'en_AU',
         type: 'website',
     },
-     // Add icons, manifest etc.
      icons: {
-        icon: '/favicon.ico', // !! CREATE and place this in /public !!
-        apple: '/apple-touch-icon.png', // !! CREATE and place this in /public !!
+        icon: '/favicon.ico', // <<< Ensure /public/favicon.ico exists
+        apple: '/apple-touch-icon.png', // <<< Ensure /public/apple-touch-icon.png exists
     },
-    // manifest: '/site.webmanifest', // !! CREATE and place this in /public !!
 };
-
 
 export default function RootLayout({
   children,
@@ -56,16 +44,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Apply only the Inter font variable
-    <html lang="en" className={`${inter.variable}`}>
-      <body className="font-sans"> {/* font-sans uses --font-inter via tailwind.config.js */}
-        <Header />
-         {/* Add padding-top equal to header height to avoid content overlap */}
-         {/* You might need to inspect your rendered header to get the exact height */}
-        <main className="pt-16 md:pt-20">
+    // Apply font variable defined by next/font
+    <html lang="en" className={`${inter.variable} h-full`}>
+      {/* Apply base font from tailwind.config.js, ensure full height layout */}
+      <body className="font-sans flex flex-col min-h-full">
+        <Header /> {/* Renders the sticky header */}
+
+        {/* Main content area */}
+        {/* IMPORTANT: pt-[value] MUST match the height of your Header component */}
+        {/* Inspect the header height in dev tools if unsure */}
+        <main className="flex-grow pt-[68px] md:pt-[76px]"> {/* Example values, ADJUST AS NEEDED */}
             {children}
         </main>
-        <Footer />
+
+        <Footer /> {/* Renders the footer */}
       </body>
     </html>
   );
